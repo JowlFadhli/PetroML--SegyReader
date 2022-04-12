@@ -25,7 +25,9 @@ import pathlib
 import numpy as np
 
 ```
-### 2. Reading seg-y data
+
+## Header Analysis
+### 2. Reading seg-y header
 
 For data reading, simply pass the file location by replacing the "filepath" with appropriate path. 
  ```
@@ -34,7 +36,7 @@ For data reading, simply pass the file location by replacing the "filepath" with
  
  ### 3. Importing necessary package from segy-sak library
  
- i. To observe the properties and metadata of the file by observing the header , simply use:
+To observe the properties and metadata of the file by observing the header , simply use:
  
 ```
 from segysak.segy import get_segy_texthead
@@ -44,7 +46,8 @@ Running the code will give gives the details of the header. From the header, we 
 
 <img width="287" alt="image" src="https://user-images.githubusercontent.com/93107581/162869424-32757585-d673-4cd5-ac8b-ba11b43583a7.png">
 
-ii. Next step involves deeper trace header data investigation and the code below can be use to give basic statistics of each byte position in a pandas.dataframe format. 
+
+Next step involves deeper trace header data investigation and the code below can be use to give basic statistics of each byte position in a pandas.dataframe format. 
 
 ```
 from segysak.segy import segy_header_scan
@@ -53,5 +56,17 @@ scan2D = segy_header_scan(path)
 scan2D
 
 ```
+Output:
+
+<img width="278" alt="image" src="https://user-images.githubusercontent.com/93107581/162870067-e89b3581-aca8-430f-aa9b-dca859e26d4d.png">
+
+One problem which might arise includes blank byte location. Using proper standard deviation value, blank values can be filtered out and better understanding of the data composition can be obtained. 
+
+```
+scan2D[scan2D["std"] > 0]
+
+```
+
+Thus, the output produced will display certain 
 
 
