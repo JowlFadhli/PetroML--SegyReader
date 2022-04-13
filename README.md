@@ -8,6 +8,7 @@ Segysak is a library for loading and manipulating seg-y data with python. Improv
 
 ## What is the difference between xarray and regular array?
 Read more at https://github.com/pydata/xarray.git and https://bit.ly/3v91MU4. 
+
 Xarray is a python package that helps to handle labeled multi-dimensional (N-dimensional/ND) arrays which heavily inspired by Pandas. The things when handling seg-y file is when dealing with null or NAn value. Apart from that, seg-y data often comes in multi-dimensional (2d/3d). 
 
 Difference between numpy array and xarray includes
@@ -26,7 +27,7 @@ import numpy as np
 
 ```
 
-## Header Analysis
+## Scanning SEG-Y Header
 ### 2. Reading seg-y header
 
 For data reading, simply pass the file location by replacing the "filepath" with appropriate path. 
@@ -67,6 +68,36 @@ scan2D[scan2D["std"] > 0]
 
 ```
 
-Thus, the output produced will display certain 
+Thus, the output produced will display the composition of the data.
+
+<img width="371" alt="image" src="https://user-images.githubusercontent.com/93107581/163081086-275edb1a-0591-4c86-9ea1-976bd83928de.png">
+
+## Loading SEG-Y data 
+
+Using segy_loader, various seg-y format such as 3d/2d/3d gather/2d gather are ingested into xarray.dataset.
+
+```
+from segysak.segy import segy_loader
+V2D = segy_loader(path, cdp=21, vert_domain="TWT")
+V2D
+```
+Output:
+<img width="348" alt="image" src="https://user-images.githubusercontent.com/93107581/163081938-2b99647a-3fa4-4244-a135-cb5355f7962e.png">
+
+## Visualizing SEG-Y 
+
+For 2d data, 
+```
+fig, ax1 = plt.subplots(ncols=1, figsize=(10, 10))
+V2D.data.transpose('twt', 'cdp', transpose_coords=True).plot(yincrease=False, cmap="seismic_r")
+plt.grid("grey")
+plt.ylabel("TWT") 
+plt.xlabel("CDP")
+```
+
+Output:
+
+<img width="239" alt="image" src="https://user-images.githubusercontent.com/93107581/163082165-9391152c-9d1c-484f-9747-3ec491bd1a19.png">
+
 
 
