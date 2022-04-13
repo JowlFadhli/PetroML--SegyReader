@@ -82,11 +82,12 @@ V2D = segy_loader(path, cdp=21, vert_domain="TWT")
 V2D
 ```
 Output:
+
 <img width="348" alt="image" src="https://user-images.githubusercontent.com/93107581/163081938-2b99647a-3fa4-4244-a135-cb5355f7962e.png">
 
 ## Visualizing SEG-Y 
 
-For 2d data, 
+Matplotlib will be used for plotting and visualization purposes and by transposing the data stored in xarray, the seismic section can be visualized. 
 ```
 fig, ax1 = plt.subplots(ncols=1, figsize=(10, 10))
 V2D.data.transpose('twt', 'cdp', transpose_coords=True).plot(yincrease=False, cmap="seismic_r")
